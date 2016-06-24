@@ -17,7 +17,7 @@ Follow [this](https://github.com/Microsoft/CMake/tree/feature/Win10) to build CM
 ### Aruco Wrapper
 [Aruco](http://www.uco.es/investiga/grupos/ava/node/26) is an open source marker tracking application based on OpenCV. ```aruco_core/aruco_core.cpp``` is a modification of ```aruco_simple``` example.
 
-* Use the CMake tool for UWP to build the VS solution (-G "Visual Studio 14 2015") for the wrapper
+* Use the CMake tool for UWP to build the VS solution for the wrapper, navigate to the build folder, and execute: ```Path\To\CMake\bin\Release\cmake.exe -G "Visual Studio 14 2015" -DCMAKE_SYSTEM_NAME:String=WindowsStore -DCMAKE_SYSTEM_VERSION:String="10.0" -DCMAKE_VS_EFFECTIVE_PLATFORMS:String=x86 ..```
 * Open the VS solution and configure the project so that "/ZW" option is activated (Consume Windows Runtime Extension).
 * Build the dll.
 
