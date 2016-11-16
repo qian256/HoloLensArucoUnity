@@ -3,17 +3,21 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 extern "C" {
+	// getInt is for debugging the connection between the dll and Unity program
 	__declspec(dllexport) int getInt() {
 		return 10;
 	}
 
+	// get the size of image
 	__declspec(dllexport) int getSize() {
 		cv::Mat m(100, 100, CV_8UC3);
 		return m.cols * m.rows;
 	}
 
+	// controller of aruco tracking behavior
 	class arucoController {
 	public:
+		// constructor with camera parameter setting and dector setting
 		arucoController() : CamParam(), MDetector() {
 			MarkerSize = 0.1;
 			MDetector.setThresholdParams(7, 7);
@@ -23,17 +27,20 @@ extern "C" {
 			image = NULL;
 		}
 
+		// set the raw camera image from Unity3D
 		void setImage(uchar* imageData) {
 			delete image;
 			image = new cv::Mat(rows, cols, CV_8UC4, imageData, cols * 4);
 			cv::cvtColor(*image, gray, CV_BGRA2GRAY);
 		}
 
+		// set the image size
 		void setSize(int row, int col) {
 			rows = row;
 			cols = col;
 		}
 
+		// detect markers using Aruco
 		void detect() {
 			try {
 				Markers = MDetector.detect(gray, CamParam, MarkerSize);
@@ -43,10 +50,13 @@ extern "C" {
 			}
 		}
 
+		// get the number of markers in the camera image
 		int getNumMarkers() {
 			return (int)(Markers.size());
 		}
 
+		// get the processed image
+		// raw camera capture + corner highlighed + edge highlighted + marker id
 		uchar* getProcessedImage() {
 			if (image == NULL) {
 				std::cerr << "Error : image not set" << endl;
@@ -59,15 +69,17 @@ extern "C" {
 			return processedImage.data;
 		}
 
-
+		// destructor
 		~arucoController() {
 			delete image;
 		}
 
+		// get number of columns (connection check)
 		int getCols() {
 			return cols;
 		}
 
+		// get number of rows (connection check)
 		int getRows() {
 			return rows;
 		}
@@ -86,6 +98,8 @@ extern "C" {
 	arucoController* ac;
 	bool initialized = false;
 
+
+	// export API for C# environment
 	__declspec(dllexport) void initArucoController() {
 		if (!initialized) {
 			ac = new arucoController();
