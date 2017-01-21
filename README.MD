@@ -4,6 +4,9 @@ Author: [Long Qian](https://longqian.me/aboutme)
 
 Date: 2016-06-10
 
+## Preface
+**2017-01-21:** If you are interested in **tracking fiducial markers for HoloLens**, it is recommended to visit another repository of mine: [HoloLensARToolKit](https://github.com/qian256/HoloLensARToolKit), which has better performance than Aruco on UWP platforms. 
+
 ## Shortcut
 * The application file ```hololens_aruco_unity/HoloLensAruco_1.0.0.0_x86_Master.appx``` can be deployed to HoloLens via __HoloLens Device Portal__.
 
@@ -11,11 +14,12 @@ Date: 2016-06-10
 ## Installation Guide
 
 ### CMake for Windows 10
-Follow [this](https://github.com/Microsoft/CMake/tree/feature/Win10) to build CMake tool with support for Windows 10.
+* Recent CMake release supports UWP already.
+* If you are using CMake version earlier than 3.4, please follow [this](https://github.com/Microsoft/CMake/tree/feature/Win10) to build CMake tool with support for Windows 10.
 
 ### OpenCV for UWP
-* Follow [this](https://blogs.msdn.microsoft.com/lucian/2015/11/27/opencv-building-uwp-binaries/) to build OpenCV binaries for Windows UWP.
-* The "Long way" is recommended. ```opencv_uwp``` folder contains the opencv binary I built for Windows UWP (x86 only, since HoloLens run on x86).
+* Follow [this](https://blogs.msdn.microsoft.com/lucian/2015/11/27/opencv-building-uwp-binaries/) to build OpenCV binaries for Windows UWP. The "Long way" is recommended.
+* ```opencv_uwp``` folder contains the opencv binary I built for Windows UWP (x86 only, since HoloLens run on x86).
 * Set environment ```OpenCV_DIR``` to the your folder of ```opencv_uwp```.
 
 ### Aruco Wrapper
@@ -33,4 +37,4 @@ Follow [this](https://github.com/Microsoft/CMake/tree/feature/Win10) to build CM
 
 ## Issues
 * The pose of Aruco marker is augmented through 2D processed image, not in terms of 3D overlay. However, 3D overlay is not hard to achieve by combining the marker tracking of Aruco and the environmental tracking of HoloLens.
-* Frame rate is lowered since C# is transfering raw image data to aruco_core.dll. This could be improved by compressing the image on both sides (Unity script and aruco_core).
+* Frame rate is lowered since C# is transfering raw image data to aruco_core.dll. This could be improved by compressing the image on both sides (Unity script and aruco_core). This issue is addressed by [HoloLensARToolKit](https://github.com/qian256/HoloLensARToolKit)
